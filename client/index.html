@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <title>Memory game</title>
+    <link rel="stylesheet" href="styles.css" media="screen" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="client.js"></script>
+  </head>
+  <body>
+    <section id="main">
+      <header>
+	<h1>Nodery - a memory game</h1>
+	<p>
+	  This is just a simple memory game, made for two players.
+	</p>
+      </header>
+      <section class="sep">
+      </section>
+      <section id="matchmaking">
+	<p>
+	  To start, please request a match and wait for another player : <br/>
+	  <span class="center">
+	    <input type="button" value="Request a match!" name="request" id="request"/>
+	    <span id="waitingPlayer">Waiting for another player ... </span>
+	  </span>
+	</p>
+      </section>
+      <section id="game">
+	<p id="status">
+	  <span id="yourturn">It's your turn to play!</span>
+	  <span id="notturn">Waiting for the other player to decide ...</span>
+	</p>
+	<p id="count">Points : <span id="points">0</span></p>
+	<a href="#" id="card-1"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-2"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-3"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-4"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-5"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-6"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<br/>
+	<a href="#" id="card-7"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-8"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-9"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-10"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-11"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-12"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<br/>
+	<a href="#" id="card-13"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-14"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-15"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-16"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-17"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<a href="#" id="card-18"><img src="img/card.jpg" alt="back" width="150"/></a>
+	<br/>
+      </section>
+    </section>
+  </body>
+</html>
