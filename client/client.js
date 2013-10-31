@@ -7,16 +7,23 @@ var isTurn = false;
 var idGame = 0;
 var myPoints = 0;
 
+
 function updatePoints() {
     $("#points").text(myPoints);
+}
+
+function animationGameOver(res) {
+    $("#game").hide(2000);
+    $("#text-" + res).show();
+    $("#end").show(2000)
 }
 
 function checkGame() {
     if ($("#game img[src='img/card.jpg']").length == 0) {
 	if ($("#game img").length / 4 - myPoints > 0) {
-	    alert("Game over ! You lost :(");
+	    animationGameOver("win");
 	} else {
-	    alert("Game over ! You won :)");
+	    animationGameOver("loss");
 	}
     }
 }
@@ -34,7 +41,9 @@ function wait() {
 	idGame : idGame
 	}
     }).done(function(data) {
-	if (data.msg !== "end") {
+	if (data.terminate == true) {
+	    animationGameOver("leave");
+	} else {
 	    isTurn = data.turn;
 	    $("#card-" + data.idCard).children().attr("src", data.src);
 	    checkGame();
@@ -90,17 +99,21 @@ $(document).ready(function(){
 		    idGame: idGame,
 		    idCard : idCard
 		}
-	    }).done(function(data) {	    
-		$("#card-" + data.idCard).children().attr("src", data.src);
-		myPoints += data.point;
-		updatePoints();
-		checkGame();
-		if (data.turn != true) {
-		    $("#notturn").show();
-		    $("#yourturn").hide();
-		    isTurn = false;
-		    window.setTimeout(resetWrongCards, 2000, data);
-		    wait();
+	    }).done(function(data) {
+		if (data.terminate == true) {
+		    animationGameOver("leave");
+		} else {
+		    $("#card-" + data.idCard).children().attr("src", data.src);
+		    myPoints += data.point;
+		    updatePoints();
+		    checkGame();
+		    if (data.turn != true) {
+			$("#notturn").show();
+			$("#yourturn").hide();
+			isTurn = false;
+			window.setTimeout(resetWrongCards, 2000, data);
+			wait();
+		    }
 		}
 	    })
 	}

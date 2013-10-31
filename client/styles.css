@@ -76,3 +76,11 @@ footer {
 #count {
     display:right;
 }
+
+#end {
+    display:none;
+}
+
+#text-win, #text-loss, #text-leave {
+    display:none;
+}

@@ -17,9 +17,18 @@ function Game(id) {
 
     var waitingPlayer = null;
     var lastPickedCard = 0;
+    var terminate = false;
     this.getCard = function(card) {
 	var data = {};
 	var waitingPlayerData = {};
+
+	if (terminate == true) {
+	    data.terminate = true;
+	    return data;
+	}
+
+	data.terminate = false;
+
 	if (tab[lastPickedCard - 1] != tab[card - 1] && lastPickedCard != 0) {
 	    data.turn = false;
 	    data.point = 0;
@@ -51,15 +60,30 @@ function Game(id) {
     this.setWaitingPlayer = function(player) {
 	waitingPlayer = player;
     }
+
+    this.setTermination = function() {
+	terminate = true;
+	setTimeout(removeGame, 20000, id);
+    }
 }
 
-function Player(request, response) {
-    // add termination (on("close")
+
+// Remove game from the list in case of timeout
+function removeGame(id) {
+    listGames.splice(id, 1);
+}
+
+function Player(request, response, gameId) {
     this.answer = function(data) {
 	response.writeHead(200, {"Content-Type": "application/json"});
 	response.write(JSON.stringify(data));
 	response.end();
     }
+
+    request.on("close", function() {
+	listGames[gameId].setTermination();
+    });
+
 }
 
 function createGame() {
@@ -78,7 +102,7 @@ function play(postData, request, response) {
 	body.idGame in listGames == true) {
 	var data = listGames[body.idGame].getCard(body.idCard);
 	data.idCard = body.idCard;
-	var newPlayer = new Player(request, response);
+	var newPlayer = new Player(request, response, body.idGame);
 	newPlayer.answer(data);
     } else {
 	responses.send403(response, "");
@@ -89,7 +113,7 @@ function wait(postData, request, response) {
     var body = querystring.parse(postData);
     if ("idGame" in body && 
 	body.idGame in listGames == true) {
-	var player = new Player(request, response);
+	var player = new Player(request, response, body.idGame);
 	listGames[body.idGame].setWaitingPlayer(player);
     } else {	
 	responses.send403(response, "");
