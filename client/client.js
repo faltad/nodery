@@ -21,9 +21,9 @@ function animationGameOver(res) {
 function checkGame() {
     if ($("#game img[src='img/card.jpg']").length == 0) {
 	if ($("#game img").length / 4 - myPoints > 0) {
-	    animationGameOver("win");
-	} else {
 	    animationGameOver("loss");
+	} else {
+	    animationGameOver("win");
 	}
     }
 }

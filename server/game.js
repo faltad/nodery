@@ -7,6 +7,7 @@ function Game(id) {
     var totalCell = listNumbers.length;
     var tab = new Array();
     var rand = 0;
+    var timerId = 0;
 
     while (totalCell > 0) {
 	rand = Math.floor(Math.random() * (totalCell) + 1) - 1;
@@ -22,6 +23,11 @@ function Game(id) {
 	var data = {};
 	var waitingPlayerData = {};
 
+	// reset timer every time the active player plays
+	clearTimeout(timerId);
+	timerId = setTimeout(this.alertWaitingPlayer, 100000, this.setTermination);
+	
+	// Check if the waiting player left, if he did, then alert
 	if (terminate == true) {
 	    data.terminate = true;
 	    return data;
@@ -57,13 +63,31 @@ function Game(id) {
 	}
 	return data;
     };
+
     this.setWaitingPlayer = function(player) {
 	waitingPlayer = player;
+	if (timerId == 0) {
+	    timerId = setTimeout(this.alertWaitingPlayer, 100000, this.setTermination);
+	}
     }
-
+    
+    // Set the game for termination, wait 100 seconds before
+    // destroying it, so that if the active player plays, he will get alerted
+    // but if he leaves as well, the game will be destroyed at some point
     this.setTermination = function() {
 	terminate = true;
-	setTimeout(removeGame, 20000, id);
+	if (timerId != 0) {
+	    clearTimeout(timerId);
+	}
+	setTimeout(removeGame, 100000, id);
+    }
+
+    this.alertWaitingPlayer = function(handler) {
+	if (waitingPlayer != null) {
+	    var data = { "terminate": true };
+	    waitingPlayer.answer(data);
+	    handler();
+	}
     }
 }
 
