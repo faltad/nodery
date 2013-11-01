@@ -1,6 +1,6 @@
 Nodery
 ======
-Nodery is a simple online memory game. It is intented for two players, but can host hundred of game simultaneously.
+Nodery is a simple online memory game. It is intented for two players, but can host hundreds of games simultaneously.
 
 The goal was to practise and enjoy using the following technologies: 
 
