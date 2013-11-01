@@ -95,6 +95,7 @@ function Game(id) {
 // Remove game from the list in case of timeout
 function removeGame(id) {
     listGames.splice(id, 1);
+    console.log("Destroying game number "+ id);
 }
 
 function Player(request, response, gameId) {
@@ -117,6 +118,7 @@ function createGame() {
     }
     var newGame = new Game(rand);
     listGames[rand] = newGame;
+    console.log("Creating game number: " + rand);
     return rand;
 }
 
