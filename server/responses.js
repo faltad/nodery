@@ -29,7 +29,7 @@ function send500(response, pathname) {
 }
 
 function staticFile(response, pathname) {
-    fs.stat("client" + pathname, function(err, stat) {
+    fs.stat("./client" + pathname, function(err, stat) {
 	if (!err) {
 	    fs.readFile("client" + pathname, function(err, contents) {
 		if (!err) {
